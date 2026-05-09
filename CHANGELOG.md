@@ -2,6 +2,10 @@
 
 Full release notes with details on each version: [GitHub Releases](https://github.com/safishamsi/graphify/releases)
 
+## Unreleased
+
+- Feat: ReScript (`.res`, `.resi`) extraction -- modules (with arbitrarily nested submodules), types, let-bindings as functions or variables, tuple/record destructure patterns, `external` JS bindings (callable when the type annotation is a function_type, value otherwise), nested let-functions inside function bodies (registered as methods of their parent function), `.resi` signature-only lets (function vs variable resolved from the type annotation), `open` / `include` imports with cross-file resolution that maps bare module names to real file ids, intra- and cross-file calls including qualified calls (`Foo.bar`, `Belt.Array.some`) and pipe-style calls (`arr->some(...)`). Brings ReScript shops on graphify from "0 ReScript symbols, 15 README nodes" to ~4.2k nodes / ~4.7k edges on a 186-file `.res`/`.resi` corpus. The tree-sitter binding is vendored under `graphify/_vendor/tree_sitter_rescript/` (rescript-lang/tree-sitter-rescript v6.0.0) because there's no `tree-sitter-rescript` PyPI release; setup.py compiles the C extension as part of graphify's wheel build, so users see no extra install step.
+
 ## 0.7.11 (2026-05-09)
 
 - Fix: context-window-exceeded API errors now trigger automatic retry with bisected file chunks -- exponential bisection up to 6 levels deep; covers `"context_length_exceeded"`, `"maximum context length"`, and `"too_large"` across OpenAI-compat backends (#789)
